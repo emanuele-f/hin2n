@@ -13,9 +13,6 @@ import wang.switchy.hin2n.storage.db.base.DaoMaster;
 import wang.switchy.hin2n.storage.db.base.DaoSession;
 import wang.switchy.hin2n.tool.N2nTools;
 
-import com.tencent.bugly.Bugly;
-import com.tencent.bugly.beta.Beta;
-import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 
@@ -59,9 +56,6 @@ public class Hin2nApplication extends MultiDexApplication {
 
         UMConfigure.init(this, N2nTools.getMetaData(this, N2nTools.MetaUmengAppKey), N2nTools.getMetaData(this, N2nTools.MetaUmengChannel), UMConfigure.DEVICE_TYPE_PHONE, "");
 
-        MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-
-        Bugly.init(this, N2nTools.getMetaData(this, N2nTools.MetaBuglyAppId), BuildConfig.DEBUG);
         initShare();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
