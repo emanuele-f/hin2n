@@ -26,10 +26,6 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-import com.zhy.m.permission.MPermissions;
-import com.zhy.m.permission.PermissionDenied;
-import com.zhy.m.permission.PermissionGrant;
-import com.zhy.m.permission.ShowRequestPermissionRationale;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -452,66 +448,5 @@ public class MainActivity extends BaseActivity {
             // 未安装手Q或安装的版本不支持
             return false;
         }
-    }
-
-
-    /**
-     * check permission
-     *
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        MPermissions.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 123) {
-            for (int i = 0; i < grantResults.length; i++) {
-//                Log.e("zhangbzshare", "permission[" + i + "] = " + permissions[i] + ",grantResult[" + i + "] = " + grantResults[i]);
-                if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(mContext, "Permission Denied", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-            doOnClickShareItem();
-        }
-
-    }
-
-
-    @PermissionGrant(REQUECT_CODE_SDCARD)
-    public void requestSdcardSuccess() {
-        Toast.makeText(this, "GRANT ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
-    }
-
-    @PermissionDenied(REQUECT_CODE_SDCARD)
-    public void requestSdcardFailed() {
-        Toast.makeText(this, "DENY ACCESS SDCARD!", Toast.LENGTH_SHORT).show();
-//        finish();
-    }
-
-    @ShowRequestPermissionRationale(REQUECT_CODE_SDCARD)
-    public void ShowRequestPermissionRationale() {
-        Toast.makeText(this, "ShowRequestPermissionRationale", Toast.LENGTH_SHORT).show();
-        Logger.d("ShowRequestPermissionRationale");
-
-//        mConnectBtn.setImageResource(R.mipmap.ic_state_supernode_diconnect);
-//        mSupernodeDisconnectNote.setVisibility(View.VISIBLE);
-
-        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE);
-        sweetAlertDialog
-                .setTitleText("I need permission!")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                        sweetAlertDialog.dismiss();
-                        MPermissions.requestPermissions(MainActivity.this, REQUECT_CODE_SDCARD, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-                    }
-                })
-                .show();
     }
 }
